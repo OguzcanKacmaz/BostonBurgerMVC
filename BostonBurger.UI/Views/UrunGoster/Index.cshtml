@@ -1,0 +1,7 @@
+﻿@model BaseEntity
+<div class="d-flex flex-column align-items-center">
+    <h1 class="text-color">@Model.Adı</h1>
+    <img src="~/img/@Model.Resim" />
+    <p class="my-5 text-colorA">@Model.Aciklama</p>
+    <a asp-action="Index" asp-controller="Siparis" class="btn btn-danger">Sipariş Ver</a>
+</div>

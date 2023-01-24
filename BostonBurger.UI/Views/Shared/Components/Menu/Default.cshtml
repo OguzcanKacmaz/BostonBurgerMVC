@@ -1,0 +1,43 @@
+﻿@model List<Menu>
+
+@if (Model != null && Model.Count > 8)
+{
+    <div class="dropdown">
+        <button class="dropbtn">Menuler</button>
+        <div class="dropdown-content">
+            <div class="d-flex">
+                <div>
+                    @foreach (var menu in Model)
+                    {
+                        if (menu.ID % 2 == 1)
+                        {
+                            <a asp-action="Index" asp-controller="UrunGoster" asp-route-urunNo="@menu.ID" asp-route-tur="Menu" class="btn">@menu.Adı</a>
+                        }
+                    }
+                </div>
+                <div>
+                    @foreach (var menu in Model)
+                    {
+                        if (menu.ID % 2 == 0)
+                        {
+                            <a asp-action="Index" asp-controller="UrunGoster" asp-route-urunNo="@menu.ID" asp-route-tur="Menu" class="btn">@menu.Adı</a>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (Model != null && Model.Count <= 8)
+{
+    <div class="dropdown">
+        <button class="dropbtn">Menuler</button>
+        <div class="dropdown-content">
+            @foreach (var menu in Model)
+            {
+                <a asp-action="Index" asp-controller="UrunGoster" asp-route-urunNo="@menu.ID" asp-route-tur="Menu" class="btn">@menu.Adı</a>
+            }
+        </div>
+    </div>
+
+}

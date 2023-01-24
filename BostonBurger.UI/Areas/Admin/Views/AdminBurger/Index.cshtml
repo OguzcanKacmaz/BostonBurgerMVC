@@ -1,0 +1,63 @@
+﻿@model List<Burger>
+@{
+    ViewData["Title"] = "Burgerler";
+    string message = (string)TempData["Mesaj"]!;
+}
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            </p>
+            <div class="table-responsive">
+                <table class="table table-dark">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Burger Id</th>
+                            <th>Burger Adı</th>
+                            <th>Burger Fiyatı</th>
+                            <th>Burger Açıklama</th>
+                            <th>Burger Resim</th>
+                            <th>Sil</th>
+                            <th>Güncelle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var burger in Model)
+                        {
+                                <tr>
+                                    <th>
+                                    @burger.ID
+                                    </th>
+                                    <td>
+                                    @burger.Adı
+                                    </td>
+                                    <td>
+                                    @burger.Fiyat
+                                    </td>
+                                    <td>
+                                    @burger.Aciklama
+                                    </td>
+                                    <td>
+                                    <img src="~/img/@burger.Resim" />
+                                    </td>
+                                    <td>
+                                    <a asp-area="Admin" asp-action="BurgerSil" asp-route-burgerId="@burger.ID" class="btn btn-danger">Sil</a>
+                                    </td>
+                                    <td>
+                                    <a asp-area="Admin" asp-action="BurgerGuncelle" asp-route-burgerId="@burger.ID" class="btn btn-warning">Güncelle</a>
+                                    </td>
+                                </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <a class="btn btn-outline-primary mt-3" asp-controller="AdminBurger" asp-action="BurgerEkle">Burger Ekle</a>
+            @section Scripts{
+                    <script>
+                        let message = "@message";
+                        if (message)
+                            messageShow(message)
+                    </script>
+            }
+        </div>
+    </div>
+</div>

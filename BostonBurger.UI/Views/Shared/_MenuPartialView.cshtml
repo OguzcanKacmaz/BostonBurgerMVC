@@ -1,0 +1,92 @@
+﻿@{
+    int sayac = 1;
+}
+@if (Model.Menuler.Count > 0)
+{
+    <div class="my-5">
+        <h2 class="text-center mb-5 text-color">Menuler</h2>
+        <div>
+            @if (Model.Menuler.Count > 5)
+            {
+
+                <div class="d-flex flex-column   align-items-center">
+                    <div class="d-flex">
+                        @foreach (Menu menu in Model.Menuler)
+                        {
+                            if (sayac <= 5)
+                            {
+                                <div class="d-flex flex-column  ">
+                                    <div class="me-3 mb-3">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="~/img/@menu.Resim" class="card-img-top" height="200px" alt="...">
+                                            <div class="card-body d-flex flex-column align-items-center">
+                                                <h6 class="card-title">@menu.Adı</h6>
+                                                <p class="card-text">@menu.Fiyat.ToString("c2")</p>
+                                                <a asp-action="Index" asp-controller="Siparis" class="btn btn-danger">Sipariş Ver</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            sayac++;
+                        }
+                    </div>
+                    @{
+                        sayac = 1;
+                    }
+                    <div class="d-flex  ">
+                        @foreach (Menu menu in Model.Menuler)
+                        {
+                            if (sayac > 5)
+                            {
+                                <div class="d-flex flex-column  ">
+                                    <div class="me-3">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="~/img/@menu.Resim" class="card-img-top" height="200px" alt="...">
+                                            <div class="card-body d-flex flex-column align-items-center">
+                                                <h6 class="card-title">@menu.Adı</h6>
+                                                <p class="card-text">@menu.Fiyat.ToString("c2")</p>
+                                                <a asp-action="Index" asp-controller="Siparis" class="btn btn-danger">Sipariş Ver</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            sayac++;
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        @if (Model.Menuler.Count <= 5)
+        {
+            <div class="d-flex flex-column align-items-center">
+                <div class="d-flex">
+                    @foreach (Menu menu in Model.Menuler)
+                    {
+                        <div class="me-3 d-flex  ">
+                            <div class="card" style="width: 18rem;">
+                                <img src="~/img/@menu.Resim" class="card-img-top" height="200px" alt="...">
+                                <div class="card-body d-flex flex-column align-items-center">
+                                    <h6 class="card-title">@menu.Adı</h6>
+                                    <p class="card-text">@menu.Fiyat.ToString("c2")</p>
+                                    <a asp-action="Index" asp-controller="Siparis" class="btn btn-danger">Sipariş Ver</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+}
+else
+{
+    <div class="my-5">
+        <h2 class="text-center mb-5 text-color">Menuler</h2>
+        <div class="border p-4 w-100 text-center text-colorA">
+            Ürün Yoktur
+        </div>
+    </div>
+}

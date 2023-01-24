@@ -1,0 +1,43 @@
+﻿@model SepetViewModel
+
+<h1 class="text-center text-color">Sepet</h1>
+
+<div class="d-flex flex-column">
+    <div class="d-flex flex-column align-items-center">
+        <div class="mb-3">
+            <div class="card" style="width: 18rem;">
+                <form asp-action="SepetiOnayla" asp-controller="Siparis" method="post">
+                    <div class="card-body d-flex flex-column align-items-center">
+                        @foreach (var item in Model.Sepet)
+                        {
+                            <h6 class="card-title text-color">@item.Adı</h6>
+                            <p class="card-text text-color">@item.Fiyat.ToString("c2")</p>
+                        }
+                        <div>
+                            <label asp-for="Adet" class="card-text text-color">Adet : @Model.Adet</label>
+                            <input type="hidden" asp-for="Adet" />
+                        </div>
+                        <div>
+                            <label asp-for="Boyut" class="card-text text-color">Boyut : @Model.Boyut</label>
+                            <input type="hidden" asp-for="Boyut" />
+
+
+                        </div>
+                        <div>
+                            <label asp-for="Fiyat" class="card-text text-color">Toplam Tutar = @Model.Fiyat.ToString("c2")</label>
+                            <input type="hidden" asp-for="Fiyat" />
+
+
+                        </div>
+                        <button class="btn btn-warning align-self-center my-3">Sepeti Onayla</button>
+                        <a asp-action="SepetiTemizle" asp-controller="Siparis" class="btn btn-danger align-self-center">Sepeti Temizle</a>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

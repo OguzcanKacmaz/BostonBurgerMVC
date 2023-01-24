@@ -1,0 +1,91 @@
+﻿@{
+    int sayac = 1;
+}
+@if (Model.Soslar.Count > 0)
+{
+    <div class="my-5">
+        <h2 class="text-center mb-5 text-color">Soslar</h2>
+        <div>
+            @if (Model.Soslar.Count > 5)
+            {
+                <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex  ">
+                        @foreach (Sos sos in Model.Soslar)
+                        {
+                            if (sayac <= 5)
+                            {
+                                <div class="d-flex flex-column">
+                                    <div class="me-3 mb-3">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="~/img/@sos.Resim" class="card-img-top" height="200px" alt="...">
+                                            <div class="card-body d-flex flex-column align-items-center">
+                                                <h6 class="card-title">@sos.Adı</h6>
+                                                <p class="card-text">@sos.Fiyat.ToString("c2")</p>
+                                                <a asp-action="Index" asp-controller="Siparis" class="btn btn-danger">Sipariş Ver</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            sayac++;
+                        }
+                    </div>
+                    @{
+                        sayac = 1;
+                    }
+                    <div class="d-flex ">
+                        @foreach (Sos sos in Model.Soslar)
+                        {
+                            if (sayac > 5)
+                            {
+                                <div class="d-flex flex-column ">
+                                    <div class="me-3">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="~/img/@sos.Resim" class="card-img-top" height="200px" alt="...">
+                                            <div class="card-body d-flex flex-column align-items-center">
+                                                <h6 class="card-title">@sos.Adı</h6>
+                                                <p class="card-text">@sos.Fiyat.ToString("c2")</p>
+                                                <a asp-action="Index" asp-controller="Siparis" class="btn btn-danger">Sipariş Ver</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            sayac++;
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        @if (Model.Soslar.Count <= 5)
+        {
+            <div class="d-flex flex-column align-items-center">
+                <div class="d-flex">
+                    @foreach (Sos sos in Model.Soslar)
+                    {
+                        <div class="me-3">
+                            <div class="card" style="width: 18rem;">
+                                <img src="~/img/@sos.Resim" class="card-img-top" height="200px" alt="...">
+                                <div class="card-body d-flex flex-column align-items-center">
+                                    <h6 class="card-title">@sos.Adı</h6>
+                                    <p class="card-text">@sos.Fiyat.ToString("c2")</p>
+                                    <a asp-action="Index" asp-controller="Siparis" class="btn btn-danger">Sipariş Ver</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+
+}
+else
+{
+    <div class="my-5">
+        <h2 class="text-center mb-5 text-color">Soslar</h2>
+        <div class="border p-4 w-100 text-center text-colorA">
+            Ürün Yoktur
+        </div>
+    </div>
+}

@@ -1,0 +1,566 @@
+﻿@using System.Text.Json;
+@model UrunlerViewModel
+@{
+    int sayac = 1;
+}
+
+@if (Model != null)
+{
+    <h1 class="text-center text-color">Sipariş Ekranı</h1>
+    <a href="#sepet" class="btn btn-warning align-self-center">Sepeti Gör (@ViewBag.SepetUrunSayisi)</a>
+    @if (Model.Menuler.Count > 0)
+    {
+        sayac = 1;
+        <div class="my-5">
+            <h2 class="text-center mb-5 text-color">Menuler</h2>
+            <div>
+                @if (Model.Menuler.Count > 5)
+                {
+
+                    <div class="d-flex flex-column   align-items-center">
+                        <div class="d-flex">
+                            @foreach (Menu menu in Model.Menuler)
+                            {
+                                if (sayac <= 5)
+                                {
+                                    <div class="d-flex flex-column  ">
+                                        <div class="me-3 mb-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="~/img/@menu.Resim" class="card-img-top" height="200px" alt="...">
+                                                <div class="card-body d-flex flex-column align-items-center">
+                                                    <h6 class="card-title text-color">@menu.Adı</h6>
+                                                    <p class="card-text text-color">@menu.Fiyat.ToString("c2")</p>
+                                                    <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@menu.ID" asp-route-tur="Menu" class="btn btn-danger">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                sayac++;
+                            }
+                        </div>
+                        @{
+                            sayac = 1;
+                        }
+                        <div class="d-flex  ">
+                            @foreach (Menu menu in Model.Menuler)
+                            {
+                                if (sayac > 5)
+                                {
+                                    <div class="d-flex flex-column  ">
+                                        <div class="me-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="~/img/@menu.Resim" class="card-img-top" height="200px" alt="...">
+                                                <div class="card-body d-flex flex-column align-items-center">
+                                                    <h6 class="card-title">@menu.Adı</h6>
+                                                    <p class="card-text">@menu.Fiyat.ToString("c2")</p>
+                                                    <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@menu.ID" asp-route-tur="Menu" class="btn btn-danger">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                sayac++;
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            @if (Model.Menuler.Count <= 5)
+            {
+                <div class="d-flex flex-column   align-items-center">
+                    <div class="d-flex">
+                        @foreach (Menu menu in Model.Menuler)
+                        {
+                            <div class="me-3 d-flex  ">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="~/img/@menu.Resim" class="card-img-top" height="200px" alt="...">
+                                    <div class="card-body d-flex flex-column align-items-center">
+                                        <h6 class="card-title">@menu.Adı</h6>
+                                        <p class="card-text">@menu.Fiyat.ToString("c2")</p>
+                                        <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@menu.ID" asp-route-tur="Menu" class="btn btn-danger">Sepete Ekle</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+    }
+    @if (Model.Burgerler.Count > 0)
+    {
+        sayac = 1;
+        <div class="my-5">
+            <h2 class="text-center mb-5 text-color">Burgerler</h2>
+            <div>
+                @if (Model.Burgerler.Count > 5)
+                {
+                    <div class="d-flex flex-column   align-items-center">
+                        <div class="d-flex">
+                            @foreach (Burger burger in Model.Burgerler)
+                            {
+                                if (sayac <= 5)
+                                {
+                                    <div class="d-flex flex-column  ">
+                                        <div class="me-3 mb-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="~/img/@burger.Resim" class="card-img-top" height="200px" alt="...">
+                                                <div class="card-body d-flex flex-column align-items-center">
+                                                    <h6 class="card-title">@burger.Adı</h6>
+                                                    <p class="card-text">@burger.Fiyat.ToString("c2")</p>
+                                                    <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@burger.ID" asp-route-tur="Burger" class="btn btn-danger">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                sayac++;
+                            }
+                        </div>
+                        @{
+                            sayac = 1;
+                        }
+                        <div class="d-flex">
+                            @foreach (Burger burger in Model.Burgerler)
+                            {
+                                if (sayac > 5)
+                                {
+                                    <div class="d-flex flex-column  ">
+                                        <div class="me-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="~/img/@burger.Resim" class="card-img-top" height="200px" alt="...">
+                                                <div class="card-body d-flex flex-column align-items-center">
+                                                    <h6 class="card-title">@burger.Adı</h6>
+                                                    <p class="card-text">@burger.Fiyat.ToString("c2")</p>
+                                                    <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@burger.ID" asp-route-tur="Burger" class="btn btn-danger">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                sayac++;
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            @if (Model.Burgerler.Count <= 5)
+            {
+                <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex  ">
+                        @foreach (Burger burger in Model.Burgerler)
+                        {
+                            <div class="me-3 d-flex  ">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="~/img/@burger.Resim" class="card-img-top" height="200px" alt="...">
+                                    <div class="card-body d-flex flex-column align-items-center">
+                                        <h6 class="card-title">@burger.Adı</h6>
+                                        <p class="card-text">@burger.Fiyat.ToString("c2")</p>
+                                        <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@burger.ID" asp-route-tur="Burger" class="btn btn-danger">Sepete Ekle</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.Icecekler.Count > 0)
+    {
+        sayac = 1;
+        <div class="my-5">
+            <h2 class="text-center mb-5 text-color">İçecekler</h2>
+            <div>
+                @if (Model.Icecekler.Count > 5)
+                {
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="d-flex">
+                            @foreach (Icecek icecek in Model.Icecekler)
+                            {
+                                if (sayac <= 5)
+                                {
+                                    <div class="d-flex flex-column  ">
+                                        <div class="me-3 mb-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="~/img/@icecek.Resim" class="card-img-top" height="200px" alt="...">
+                                                <div class="card-body d-flex flex-column align-items-center">
+                                                    <h6 class="card-title">@icecek.Adı</h6>
+                                                    <p class="card-text">@icecek.Fiyat.ToString("c2")</p>
+                                                    <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@icecek.ID" asp-route-tur="Icecek" class="btn btn-danger">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                sayac++;
+                            }
+                        </div>
+                        @{
+                            sayac = 1;
+                        }
+                        <div class="d-flex  ">
+                            @foreach (Icecek icecek in Model.Icecekler)
+                            {
+                                if (sayac > 5)
+                                {
+                                    <div class="d-flex flex-column  ">
+                                        <div class="me-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="~/img/@icecek.Resim" class="card-img-top" height="200px" alt="...">
+                                                <div class="card-body d-flex flex-column align-items-center">
+                                                    <h6 class="card-title">@icecek.Adı</h6>
+                                                    <p class="card-text">@icecek.Fiyat.ToString("c2")</p>
+                                                    <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@icecek.ID" asp-route-tur="Icecek" class="btn btn-danger">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                sayac++;
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            @if (Model.Icecekler.Count <= 5)
+            {
+
+                <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex">
+                        @foreach (Icecek icecek in Model.Icecekler)
+                        {
+                            <div class="me-3">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="~/img/@icecek.Resim" class="card-img-top" height="200px" alt="...">
+                                    <div class="card-body d-flex flex-column align-items-center">
+                                        <h6 class="card-title">@icecek.Adı</h6>
+                                        <p class="card-text">@icecek.Fiyat.ToString("c2")</p>
+                                        <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@icecek.ID" asp-route-tur="Icecek" class="btn btn-danger">Sepete Ekle</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+    }
+    @if (Model.Atistirmaliklar.Count > 0)
+    {
+        sayac = 1;
+        <div class="my-5">
+            <h2 class="text-center mb-5 text-color">Atıştırmalıklar</h2>
+            <div>
+                @if (Model.Atistirmaliklar.Count > 5)
+                {
+                    <div class="d-flex flex-column   align-items-center">
+                        <div class="d-flex">
+                            @foreach (Atistirmalik atistirmalik in Model.Atistirmaliklar)
+                            {
+                                if (sayac <= 5)
+                                {
+                                    <div class="d-flex flex-column  ">
+                                        <div class="me-3 mb-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="~/img/@atistirmalik.Resim" class="card-img-top" height="200px" alt="...">
+                                                <div class="card-body d-flex flex-column align-items-center">
+                                                    <h6 class="card-title">@atistirmalik.Adı</h6>
+                                                    <p class="card-text">@atistirmalik.Fiyat.ToString("c2")</p>
+                                                    <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@atistirmalik.ID" asp-route-tur="Atistirmalik" class="btn btn-danger">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                sayac++;
+                            }
+                        </div>
+                        @{
+                            sayac = 1;
+                        }
+                        <div class="d-flex  ">
+                            @foreach (Atistirmalik atistirmalik in Model.Atistirmaliklar)
+                            {
+                                if (sayac > 5)
+                                {
+                                    <div class="d-flex flex-column  ">
+                                        <div class="me-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="~/img/@atistirmalik.Resim" class="card-img-top" height="200px" alt="...">
+                                                <div class="card-body d-flex flex-column align-items-center">
+                                                    <h6 class="card-title">@atistirmalik.Adı</h6>
+                                                    <p class="card-text">@atistirmalik.Fiyat.ToString("c2")</p>
+                                                    <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@atistirmalik.ID" asp-route-tur="Atistirmalik" class="btn btn-danger">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                sayac++;
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            @if (Model.Atistirmaliklar.Count <= 5)
+            {
+                <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex">
+                        @foreach (var atistirmalik in Model.Atistirmaliklar)
+                        {
+                            <div class="me-3">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="~/img/@atistirmalik.Resim" class="card-img-top" height="200px" alt="...">
+                                    <div class="card-body d-flex flex-column align-items-center">
+                                        <h6 class="card-title">@atistirmalik.Adı</h6>
+                                        <p class="card-text">@atistirmalik.Fiyat.ToString("c2")</p>
+                                        <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@atistirmalik.ID" asp-route-tur="Atistirmalik" class="btn btn-danger">Sepete Ekle</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.EkstraMalzemeler.Count > 0)
+    {
+        sayac = 1;
+        <div class="my-5">
+            <h2 class="text-center mb-5 text-color">Ekstra Malzemeler</h2>
+            <div>
+                @if (Model.EkstraMalzemeler.Count > 5)
+                {
+                    <div class="d-flex flex-column   align-items-center">
+                        <div class="d-flex">
+                            @foreach (EkstraMalzeme ekstraMalzemeler in Model.EkstraMalzemeler)
+                            {
+                                if (sayac <= 5)
+                                {
+                                    <div class="d-flex flex-column  ">
+                                        <div class="me-3 mb-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="~/img/@ekstraMalzemeler.Resim" class="card-img-top" height="200px" alt="...">
+                                                <div class="card-body d-flex flex-column align-items-center">
+                                                    <h6 class="card-title">@ekstraMalzemeler.Adı</h6>
+                                                    <p class="card-text">@ekstraMalzemeler.Fiyat.ToString("c2")</p>
+                                                    <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@ekstraMalzemeler.ID" asp-route-tur="EkstraMalzeme" class="btn btn-danger">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                sayac++;
+                            }
+                        </div>
+                        @{
+                            sayac = 1;
+                        }
+                        <div class="d-flex  ">
+                            @foreach (EkstraMalzeme ekstraMalzemeler in Model.EkstraMalzemeler)
+                            {
+                                if (sayac > 5)
+                                {
+
+                                    <div class="d-flex flex-column  ">
+                                        <div class="me-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="~/img/@ekstraMalzemeler.Resim" class="card-img-top" height="200px" alt="...">
+                                                <div class="card-body d-flex flex-column align-items-center">
+                                                    <h6 class="card-title">@ekstraMalzemeler.Adı</h6>
+                                                    <p class="card-text">@ekstraMalzemeler.Fiyat.ToString("c2")</p>
+                                                    <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@ekstraMalzemeler.ID" asp-route-tur="EkstraMalzeme" class="btn btn-danger">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                sayac++;
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            @if (Model.EkstraMalzemeler.Count <= 5)
+            {
+                <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex">
+                        @foreach (var ekstraMalzemeler in Model.EkstraMalzemeler)
+                        {
+                            <div class="me-3">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="~/img/@ekstraMalzemeler.Resim" class="card-img-top" height="200px" alt="...">
+                                    <div class="card-body d-flex flex-column align-items-center">
+                                        <h6 class="card-title">@ekstraMalzemeler.Adı</h6>
+                                        <p class="card-text">@ekstraMalzemeler.Fiyat.ToString("c2")</p>
+                                        <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@ekstraMalzemeler.ID" asp-route-tur="EkstraMalzeme" class="btn btn-danger">Sepete Ekle</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.Soslar.Count > 0)
+    {
+        sayac = 1;
+        <div class="my-5">
+            <h2 class="text-center mb-5 text-color">Soslar</h2>
+            <div>
+                @if (Model.Soslar.Count > 5)
+                {
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="d-flex  ">
+                            @foreach (Sos sos in Model.Soslar)
+                            {
+                                if (sayac <= 5)
+                                {
+                                    <div class="d-flex flex-column">
+                                        <div class="me-3 mb-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="~/img/@sos.Resim" class="card-img-top" height="200px" alt="...">
+                                                <div class="card-body d-flex flex-column align-items-center">
+                                                    <h6 class="card-title">@sos.Adı</h6>
+                                                    <p class="card-text">@sos.Fiyat.ToString("c2")</p>
+                                                    <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@sos.ID" asp-route-tur="Sos" class="btn btn-danger">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                sayac++;
+                            }
+                        </div>
+                        @{
+                            sayac = 1;
+                        }
+                        <div class="d-flex ">
+                            @foreach (Sos sos in Model.Soslar)
+                            {
+                                if (sayac > 5)
+                                {
+                                    <div class="d-flex flex-column ">
+                                        <div class="me-3">
+                                            <div class="card" style="width: 18rem;">
+                                                <img src="~/img/@sos.Resim" class="card-img-top" height="200px" alt="...">
+                                                <div class="card-body d-flex flex-column align-items-center">
+                                                    <h6 class="card-title">@sos.Adı</h6>
+                                                    <p class="card-text">@sos.Fiyat.ToString("c2")</p>
+                                                    <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@sos.ID" asp-route-tur="Sos" class="btn btn-danger">Sepete Ekle</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                sayac++;
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+            @if (Model.Soslar.Count <= 5)
+            {
+                <div class="d-flex flex-column align-items-center">
+                    <div class="d-flex">
+                        @foreach (Sos sos in Model.Soslar)
+                        {
+                            <div class="me-3">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="~/img/@sos.Resim" class="card-img-top" height="200px" alt="...">
+                                    <div class="card-body d-flex flex-column align-items-center">
+                                        <h6 class="card-title">@sos.Adı</h6>
+                                        <p class="card-text">@sos.Fiyat.ToString("c2")</p>
+                                        <a asp-action="SepetEkle" asp-controller="Siparis" asp-route-menuId="@sos.ID" asp-route-tur="Sos" class="btn btn-danger">Sepete Ekle</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+    }
+
+    <h1 class="text-center text-color">Sepet</h1>
+
+    <div class="d-flex flex-column">
+        <div class="d-flex flex-column align-items-center">
+            <div class="mb-3">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body d-flex flex-column align-items-center">
+                        @foreach (var item in Model.Sepet)
+                        {
+                            <h6 class="card-title text-color">@item.Adı</h6>
+                            <p class="card-text text-color">@item.Fiyat.ToString("c2")</p>
+                        }
+                        <form asp-action="SepeteGit" asp-controller="Siparis" method="post">
+                            <div class="p-3">
+                                <select class="form-select" asp-for="Boyut" required>
+                                    <option selected>Boyut</option>
+                                    <option value="1">Küçük</option>
+                                    <option value="2">Orta</option>
+                                    <option value="3">Büyük</option>
+                                </select>
+                                <span asp-validation-for="Boyut"></span>
+                            </div>
+                            <div class="p-3">
+                                <select class="form-select" asp-for="Adet" required>
+                                    <option selected>Adet</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="Adet"></span>
+                            @if (Model.Sepet.Count > 0)
+                            {
+                                <div class="d-flex flex-column align-items-center">
+                                <button id="sepet" asp-action="SepeteGit" asp-controller="Siparis" class="btn btn-warning align-self-center my-2">Sepeti Onayla</button>
+                                <button asp-action="SepetiTemizle" asp-controller="Siparis" class="btn btn-danger align-self-center">Sepeti Temizle</button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex flex-column align-items-center">
+                                    <p class="text-color text-center">Lütfen Sepeti Onaylamadan Önce Ürün Ekleyiniz.</p>
+                                    <button id="sepet" asp-action="SepeteGit" asp-controller="Siparis" class="btn btn-warning align-self-center" disabled>Sepeti Onayla</button>
+                                </div>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}

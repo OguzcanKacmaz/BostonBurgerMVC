@@ -1,0 +1,17 @@
+﻿@model UrunlerViewModel
+@{
+    string message = (string)TempData["Mesaj"]!;
+}
+<partial name="_MenuPartialView" />
+<partial name="_BurgerPartialView" />
+<partial name="_IcecekPartialView" />
+<partial name="_AtistirmalikPartialView" />
+<partial name="_SosPartialView" />
+
+@section Scripts{
+    <script>
+        let message = "@message";
+        if (message)
+            messageShow(message)
+    </script>
+            }
